@@ -65,6 +65,8 @@ Log in  at this URL with the username and password you supplied above.
 
 Once logged in, you can configure Enterprise Search by visiting `https://kibana-app.1dqmr45rt678g05.eu-gb.codeengine.appdomain.cloud/app/enterprise_search/app_search/engines`
 
+The output also contains the URL of the Elasticsearch deployment, which can be used to connect it to WxA.
+
 ## Note about implementation
 
 There is a circular dependency in this process because Kibana needs to know the location of the Enterprise Search deployment. But Enterprise Search also needs to know where the Kibana deployment is located. Both locations are not known until they are deployed, so Terraform is unable to configure all this in one step.
