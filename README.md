@@ -24,8 +24,8 @@ Get an API key by following [these steps](https://cloud.ibm.com/docs/account?top
 Clone this repo
 
 ```sh
-git clone
-cd <repo>/terraform
+git clone https://github.ibm.com/Daniel-Mermelstein/elastic-kibana-ent-search.git
+cd elastic-kibana-ent-search/terraform
 ```
 
 Create a `terraform.tfvars` document with the following parameters:
