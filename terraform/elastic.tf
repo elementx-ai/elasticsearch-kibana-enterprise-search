@@ -10,7 +10,7 @@ resource "ibm_database" "elastic" {
 data "ibm_database_connection" "es_connection" {
   endpoint_type = "public"
   deployment_id = ibm_database.elastic.id
-  user_id       = "admin"
+  user_id       = var.es_username
   user_type     = "database"
 }
 
@@ -34,4 +34,5 @@ output "es_url" {
 
 output "es_version" {
   value = ibm_database.elastic.version
+  sensitive = true
 }

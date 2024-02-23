@@ -23,7 +23,7 @@ resource "ibm_code_engine_project" "ess" {
 resource "ibm_code_engine_app" "kibana_app" {
   project_id          = ibm_code_engine_project.ess.project_id
   name                = "kibana-app"
-  image_reference     = "docker.elastic.co/kibana/kibana:${var.kibana_version}"
+  image_reference     = "docker.elastic.co/kibana/kibana:${var.es_version}.${var.es_minor_version}"
   image_port          = 5601
   scale_min_instances = 1
   scale_max_instances = 1
@@ -58,12 +58,6 @@ resource "ibm_code_engine_app" "kibana_app" {
   }
 
   run_env_variables {
-    type  = "literal"
-    name  = "ELASTICSEARCH_SSL_VERIFICATIONMODE"
-    value = "none"
-  }
-
-  run_env_variables {
     type = "literal"
     name  = "XPACK_SECURITY_ENCRYPTIONKEY"
     value = random_id.encryption_key1.hex
@@ -94,7 +88,7 @@ resource "ibm_code_engine_app" "kibana_app" {
 resource "ibm_code_engine_app" "enterprise_search_app" {
   project_id          = ibm_code_engine_project.ess.project_id
   name                = "ess-app"
-  image_reference     = "docker.elastic.co/enterprise-search/enterprise-search:${var.kibana_version}"
+  image_reference     = "docker.elastic.co/enterprise-search/enterprise-search:${var.es_version}.${var.es_minor_version}"
   image_port          = 3002
   scale_min_instances = 1
   scale_max_instances = 1
@@ -170,6 +164,7 @@ resource "null_resource" "kibana_app_update" {
     project_id             = ibm_code_engine_project.ess.id
     name                   = ibm_code_engine_app.kibana_app.name
     kibana_url             = ibm_code_engine_app.kibana_app.endpoint
+    always_run             = "${timestamp()}"  #this ensures that the script always runs to re-instante the below env variables 
   }
 
   provisioner "local-exec" {
