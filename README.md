@@ -19,7 +19,11 @@ It will also output the URL of the Elasticsearch deployment.
 
 ## Steps
 
+### Step 1
+
 Get an API key by following [these steps](https://cloud.ibm.com/docs/account?topic=account-userapikey&interface=ui#create_user_key).
+
+### Step 2
 
 Clone this repo
 
@@ -27,6 +31,8 @@ Clone this repo
 git clone https://github.ibm.com/Daniel-Mermelstein/elastic-kibana-ent-search.git
 cd elastic-kibana-ent-search/terraform
 ```
+
+### Step 3
 
 Create a `terraform.tfvars` document with the following parameters:
 
@@ -39,6 +45,8 @@ es_password = "<make up a password>"
 es_version="<a supported major version>" # eg 8.10
 es_minor_version="a supported minor version" # e.g. 1
 ```
+
+### Step 4
 
 Run Terraform to deploy the infrastructure:
 
