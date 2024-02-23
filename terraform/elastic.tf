@@ -14,25 +14,7 @@ data "ibm_database_connection" "es_connection" {
   user_type     = "database"
 }
 
-output "es_host" {
-  value = data.ibm_database_connection.es_connection.https[0].hosts[0].hostname
-}
-
-output "es_port" {
-  value = data.ibm_database_connection.es_connection.https[0].hosts[0].port
-}
-
-output "es_password" {
-  value     = ibm_database.elastic.adminpassword
-  sensitive = true
-}
-
 output "es_url" {
-    value="https://admin:${ibm_database.elastic.adminpassword}@${data.ibm_database_connection.es_connection.https[0].hosts[0].hostname}:${data.ibm_database_connection.es_connection.https[0].hosts[0].port}"
-    sensitive = true
-}
-
-output "es_version" {
-  value = ibm_database.elastic.version
+  value     = "https://admin:${ibm_database.elastic.adminpassword}@${data.ibm_database_connection.es_connection.https[0].hosts[0].hostname}:${data.ibm_database_connection.es_connection.https[0].hosts[0].port}"
   sensitive = true
 }

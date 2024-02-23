@@ -58,13 +58,13 @@ resource "ibm_code_engine_app" "kibana_app" {
   }
 
   run_env_variables {
-    type = "literal"
+    type  = "literal"
     name  = "XPACK_SECURITY_ENCRYPTIONKEY"
     value = random_id.encryption_key1.hex
   }
 
   run_env_variables {
-    type = "literal"
+    type  = "literal"
     name  = "XPACK_SECURITY_HTTP_SSL_ENABLED"
     value = "false"
   }
@@ -164,7 +164,7 @@ resource "null_resource" "kibana_app_update" {
     project_id             = ibm_code_engine_project.ess.id
     name                   = ibm_code_engine_app.kibana_app.name
     kibana_url             = ibm_code_engine_app.kibana_app.endpoint
-    always_run             = "${timestamp()}"  #this ensures that the script always runs to re-instante the below env variables 
+    always_run             = "${timestamp()}" #this ensures that the script always runs to re-instante the below env variables 
   }
 
   provisioner "local-exec" {
@@ -182,7 +182,6 @@ resource "null_resource" "kibana_app_update" {
     ibm_code_engine_app.kibana_app
   ]
 }
-
 
 output "kibana_endpoint" {
   value = ibm_code_engine_app.kibana_app.endpoint
