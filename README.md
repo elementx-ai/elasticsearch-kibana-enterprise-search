@@ -39,7 +39,6 @@ Create a `terraform.tfvars` document with the following parameters:
 ```
 ibmcloud_api_key = "<your api key>"
 region = "<an ibm cloud region>" #e.g. eu-gb
-es_url = "https://3ebddf59-57de-4f48-b6cb-d34d0d6f18e1.bmo1leol0d54tib7un7g.databases.appdomain.cloud:32041"
 es_username = "admin"
 es_password = "<make up a password>"
 es_version="<a supported major version>" # eg 8.10
