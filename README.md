@@ -2,6 +2,7 @@
 
 This repo contains a Terraform script that will deploy:
 
+- A resource group to contain all the infrastructure
 - An instance of IBM Cloud Databases for Elasticsearch Platinum
 - A Code Engine Project with two applications:
     - A Kibana deployment
@@ -40,10 +41,12 @@ Create a `terraform.tfvars` document with the following parameters:
 ibmcloud_api_key = "<your api key>"
 region = "<an ibm cloud region>" #e.g. eu-gb
 es_username = "admin"
-es_password = "<make up a password>"
+es_password = "<make up a password>" #Passwords have a 15 character minimum and must contain a number, A-Z, a-z, 0-9, -, _
 es_version="<a supported major version>" # eg 8.10
 es_minor_version="a supported minor version" # e.g. 1
 ```
+
+Note: The `variables.tf` file contains other variables that you can edit to change the CPU, RAM or disk allocation of your Elasticsearch instance.
 
 ### Step 4
 

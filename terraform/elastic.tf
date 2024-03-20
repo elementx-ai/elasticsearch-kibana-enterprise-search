@@ -5,6 +5,22 @@ resource "ibm_database" "elastic" {
   version       = var.es_version
   location      = var.region
   adminpassword = var.es_password
+
+  group {
+    group_id = "member"
+
+    memory {
+      allocation_mb = var.es_ram_mb
+    }
+
+    disk {
+      allocation_mb = var.es_disk_mb
+    }
+
+    cpu {
+      allocation_count = var.es_cpu_count
+    }
+  }
 }
 
 data "ibm_database_connection" "es_connection" {

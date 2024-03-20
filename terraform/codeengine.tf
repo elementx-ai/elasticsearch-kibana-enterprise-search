@@ -25,10 +25,10 @@ resource "ibm_code_engine_app" "kibana_app" {
   name                = "kibana-app"
   image_reference     = "docker.elastic.co/kibana/kibana:${var.es_version}.${var.es_minor_version}"
   image_port          = 5601
-  scale_min_instances = 1
+  scale_min_instances = 1 #this can be scaled down to zero to cut costs, but there may be delays every time the Kibana app has to be re-started
   scale_max_instances = 1
-  scale_cpu_limit     = 4
-  scale_memory_limit  = "16G"
+  scale_cpu_limit     = 1
+  scale_memory_limit  = "2G"
 
   run_env_variables {
     type  = "literal"
@@ -92,8 +92,8 @@ resource "ibm_code_engine_app" "enterprise_search_app" {
   image_port          = 3002
   scale_min_instances = 1
   scale_max_instances = 1
-  scale_cpu_limit     = 4
-  scale_memory_limit  = "16G"
+  scale_cpu_limit     = 1
+  scale_memory_limit  = "4G"
 
   run_env_variables {
     type  = "literal"
