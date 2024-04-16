@@ -43,7 +43,6 @@ region = "<an ibm cloud region>" #e.g. eu-gb
 es_username = "admin"
 es_password = "<make up a password>" #Passwords have a 15 character minimum and must contain a number, A-Z, a-z, 0-9, -, _
 es_version="<a supported major version>" # eg 8.10
-es_minor_version="a supported minor version" # e.g. 1
 ```
 
 Note: The `variables.tf` file contains other variables that you can edit to change the CPU, RAM or disk allocation of your Elasticsearch instance.
@@ -69,8 +68,7 @@ Once logged in, you can configure Enterprise Search by visiting `https://kibana-
 
 The output also contains the URL of the Elasticsearch deployment, which can be used to connect it to WxA.
 
-## Note about implementation
+## Notes about implementation
 
-There is a circular dependency in this process because Kibana needs to know the location of the Enterprise Search deployment. But Enterprise Search also needs to know where the Kibana deployment is located. Both locations are not known until they are deployed, so Terraform is unable to configure all this in one step.
-
-This is solved by the `kibana_app_update`null resource, which runs a shell script that updates the Kibana app's environment variables with the location of the Enterprise Search app after both of these have been fully deployed. 
+1. There is a circular dependency in this process because Kibana needs to know the location of the Enterprise Search deployment. But Enterprise Search also needs to know where the Kibana deployment is located. Both locations are not known until they are deployed, so Terraform is unable to configure all this in one step. This is solved by the `kibana_app_update`null resource, which runs a shell script that updates the Kibana app's environment variables with the location of the Enterprise Search app after both of these have been fully deployed. 
+2. The Terraform output does not contain the full version of the deployed Elastisearch instance, and this is required to deploy Kibana and Enterprise search. This is solved by the `es_metadata` data resource, which makes an API call to the deployed elasticsearch. The result of that is decoded and parsed to obtain the full version of the deployed instance. 
