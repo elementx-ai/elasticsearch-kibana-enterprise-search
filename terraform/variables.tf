@@ -11,7 +11,7 @@ variable "es_ram_mb" {
 }
 
 variable "es_disk_mb" {
-    default = 20480
+    default = 102400
 }
 
 variable "es_cpu_count" {
