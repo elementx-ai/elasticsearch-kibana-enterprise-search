@@ -15,8 +15,8 @@ resource "ibm_code_engine_secret" "ca_cert" {
 
 
 resource "ibm_code_engine_project" "ess" {
-  name              = "ess-project2"
-  resource_group_id = ibm_resource_group.ess_resource_group.id
+  name              = "elastic"
+  resource_group_id = var.resource_group_id
 }
 
 
@@ -25,7 +25,7 @@ resource "ibm_code_engine_app" "kibana_app" {
   name                = "kibana-app"
   image_reference     = "docker.elastic.co/kibana/kibana:${local.es-full-version}"
   image_port          = 5601
-  scale_min_instances = 1 #this can be scaled down to zero to cut costs, but there may be delays every time the Kibana app has to be re-started
+  scale_min_instances = 0 #this can be scaled down to zero to cut costs, but there may be delays every time the Kibana app has to be re-started
   scale_max_instances = 1
   scale_cpu_limit     = 1
   scale_memory_limit  = "2G"
@@ -159,12 +159,12 @@ resource "null_resource" "kibana_app_update" {
   triggers = {
     ibmcloud_api_key       = var.ibmcloud_api_key
     region                 = var.region
-    resource_group         = ibm_resource_group.ess_resource_group.id
+    resource_group         = var.resource_group_id
     enterprise_search_host = ibm_code_engine_app.enterprise_search_app.endpoint_internal
     project_id             = ibm_code_engine_project.ess.id
     name                   = ibm_code_engine_app.kibana_app.name
     kibana_url             = ibm_code_engine_app.kibana_app.endpoint
-    always_run             = "${timestamp()}" #this ensures that the script always runs to re-instante the below env variables 
+    always_run             = "${timestamp()}" #this ensures that the script always runs to re-instante the below env variables
   }
 
   provisioner "local-exec" {
