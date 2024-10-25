@@ -8,7 +8,7 @@ variable "es_version" {
   default = "8.15"
 }
 variable "es_ram_mb" {
-  default = 2048
+  default = 6144
 }
 variable "es_disk_mb" {
   default = 51200
